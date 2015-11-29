@@ -30,6 +30,9 @@ $baseUrl = Yii::app()->theme->baseUrl;
 	// See class documentation of CActiveForm for details on this,
 	// you need to use the performAjaxValidation()-method described there.
 	'enableAjaxValidation'=>true,
+    'htmlOptions'=>array(
+        'enctype'=>'multipart/form-data'
+    )
 )); ?>
 	
 	<h1>
@@ -48,9 +51,19 @@ $baseUrl = Yii::app()->theme->baseUrl;
 	)); ?>
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
+	<hr>
 	<?php echo $form->errorSummary($model); ?>
-
-
+	<div class="row">
+		<div class="span3">
+			<?php echo $form->labelEx($model,'profile_image'); ?>
+		</div>
+		<div class="span6">
+			<?php echo CHtml::activeFileField($model, 'profile_image'); ?>
+			<br>
+			<?php echo $form->error($model,'profile_image'); ?>
+		</div>
+	</div>
+	<hr>
 	<div class="row">
 		<div class="span3">
 			<?php echo $form->labelEx($model,'firstname'); ?>
@@ -91,6 +104,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
 			<?php echo $form->error($model,'position'); ?>
 		</div>
 	</div>
+
 
 	<div class="row">
 		<div class="span3">

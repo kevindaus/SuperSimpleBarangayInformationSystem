@@ -2,7 +2,7 @@
 
 
 <style type="text/css"> 
-    #barangayOfficialList td a {
+    #barangayOfficialList td a.deletelink {
         color: red !important;
     }
 
@@ -31,14 +31,18 @@ $this->widget('bootstrap.widgets.TbAlert', array(
 )); ?>
 
 <?php 
+
+
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'barangayOfficialList',
     'dataProvider' => $model->search(),
     'template' => "<p style='color:black'>{summary}</p>\n{items}\n{pager}",
     'columns' => array(
-        array('name'=>'firstname'),
-        array('name'=>'middlename'),
-        array('name'=>'lastname'),
+        array(
+            "type"=>'raw',
+            "header"=>'Name',
+            "value"=>'CHtml::link($data->firstname." ".$data->middlename." ".$data->lastname, array("barangayOfficials/view","id"=>$data->id))',
+        ),
         array('name'=>'position'),
         array(
         	'name'=>'term_from',
@@ -54,7 +58,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array(
             'header'=>'Action',
         	'type'=>'raw',
-        	'value'=>'CHtml::link("delete", array("/barangayOfficials/delete","barangayOfficialId"=>$data->id),array("confirm"=>"Are you sure you want to delete this record ? "))',
+        	'value'=>'CHtml::link("delete", array("/barangayOfficials/delete","barangayOfficialId"=>$data->id),array("class"=>"deletelink","confirm"=>"Are you sure you want to delete this record ? "))',
 
     	),
         // array(

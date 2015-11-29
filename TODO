@@ -138,9 +138,20 @@ main panel
 
 
 
-@TODO - Resident register 
-allow user to find , its house and save the long and lat to database
+@TODo - save profile pic at uploads 
+located at themes 
+@DONE
 
 
-@TODO - allow admin to find location using
-name and place marker on its location
+
+@TODO - 
+barangayOfficials/list
+create a link papunta sa view official information 
+@DONE
+
+@TODo - show profile picture of official 
+if no available 
+show not available 
+else , show picture 
+@DONE
+

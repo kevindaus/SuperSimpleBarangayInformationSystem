@@ -37,9 +37,25 @@ $baseUrl = Yii::app()->theme->baseUrl;
               View Vision/Mission
             </div>
         </div>
-        </a>
+        </a>  
         <div class="clearfix"></div>
       </div>
+
+      <div class='trans-menu-panel'>
+        <a href="/residents/admin">
+        <div class="span3"><img src="<?php echo $baseUrl ?>/img/people-icon.png"></div>
+        <div class="span9 " >
+            <div class='trans-panel-title' style="font-size: 26px;">
+                Resident Records
+            </div>
+            <div class='trans-panel-content'>
+              View resident records
+            </div>
+        </div>
+        </a>  
+        <div class="clearfix"></div>
+      </div>
+
 
       <?php if (Yii::app()->user->id !== 'admin'): ?>
       <div class='trans-menu-panel'>

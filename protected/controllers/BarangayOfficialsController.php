@@ -26,7 +26,7 @@ class BarangayOfficialsController extends Controller
 	{
 		return array(
 			array('allow',
-				'actions'=>array('index','list','delete'),
+				'actions'=>array('index','list','delete','view'),
 				'users'=>array('admin'),
 			),
 			array('deny',  
@@ -57,6 +57,16 @@ class BarangayOfficialsController extends Controller
 	    if(isset($_POST['BarangayOfficials']))
 	    {
 	        $model->attributes=$_POST['BarangayOfficials'];
+	        /*retrieve the uploaded file */
+            $uploadedFileObject = CUploadedFile::getInstance($model, 'profile_image');
+            if($uploadedFileObject){
+            	$newFilename = uniqid() . $uploadedFileObject->getName();
+                $ouputfile = Yii::getPathOfAlias("imageUploads") . '/'.$newFilename;
+                $uploadedFileObject->saveAs($ouputfile);
+                $model->profile_image = $newFilename;
+            }
+	        /*save to themes uploaded*/
+	        /*save to model*/
 	        if($model->save())
 	        {
 	        	Yii::app()->user->setFlash("success","<strong>Saved</strong> : New record saved");
@@ -70,4 +80,11 @@ class BarangayOfficialsController extends Controller
 		$model = new BarangayOfficials('search');
 		$this->render('list', array('model'=>$model));
 	}
+    public function actionView($id){
+        $model = BarangayOfficials::model()->findByPk($id);
+        if(!$model){
+            throw new CHttpException(404, "Sorry we cant find that barangay official's record");
+        }
+        $this->render("view", compact("model"));
+    }
 }

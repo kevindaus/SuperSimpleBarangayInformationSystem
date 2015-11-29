@@ -11,6 +11,7 @@
  * @property string $position
  * @property string $term_from
  * @property string $term_to
+ * @property string $profile_image
  * @property string $date_record_created
  * @property string $date_record_updated
  */
@@ -34,7 +35,7 @@ class BarangayOfficials extends CActiveRecord
 		return array(
 			array('firstname, middlename, lastname, term_from , term_to,position', 'required'),
 			array('firstname, middlename, lastname, position', 'length', 'max'=>255),
-			array('term_from , term_to,date_record_created, date_record_updated', 'safe'),
+			array('profile_image,term_from , term_to,date_record_created, date_record_updated', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, firstname, middlename, lastname, position, date_record_created, date_record_updated', 'safe', 'on'=>'search'),
@@ -65,6 +66,7 @@ class BarangayOfficials extends CActiveRecord
 			'position' => 'Position',
 			'term_from' => 'Term from',
 			'term_to' => 'Term to',
+			'profile_image' => 'Profile picture',
 			'date_record_created' => 'Date Record Created',
 			'date_record_updated' => 'Date Record Updated',
 		);
@@ -95,6 +97,7 @@ class BarangayOfficials extends CActiveRecord
 		$criteria->compare('position',$this->position,true);
 		$criteria->compare('term_from',$this->term_from,true);
 		$criteria->compare('term_to',$this->term_to,true);
+		$criteria->compare('profile_image',$this->profile_image,true);
 		$criteria->compare('date_record_created',$this->date_record_created,true);
 		$criteria->compare('date_record_updated',$this->date_record_updated,true);
 
@@ -134,4 +137,14 @@ class BarangayOfficials extends CActiveRecord
 		  	)
 	  	);
 	}	
+	public function beforeDelete()
+	{
+		if (isset($this->profile_image)) {
+			/*delete the photo*/
+			$imagePath = Yii::getPathOfAlias("imageUploads") . "/" . $this->profile_image;
+            unlink($imagePath);
+		}
+		parent::beforeDelete();
+		return true;
+	}
 }
