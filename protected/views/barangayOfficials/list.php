@@ -30,10 +30,11 @@ $this->widget('bootstrap.widgets.TbAlert', array(
     ),
 )); ?>
 
+<div style="background-color:white;padding: 20px;border-radius: 20px;">
+
 <?php 
-
-
-$this->widget('zii.widgets.grid.CGridView', array(
+$this->widget('bootstrap.widgets.TbGridView', array(
+    'type' => 'striped bordered',
     'id' => 'barangayOfficialList',
     'dataProvider' => $model->search(),
     'template' => "<p style='color:black'>{summary}</p>\n{items}\n{pager}",
@@ -68,6 +69,9 @@ $this->widget('zii.widgets.grid.CGridView', array(
     ),
 ));
 ?>
+</div>
+
+
 </div>
 </div>
 </div>	

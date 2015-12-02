@@ -1,38 +1,38 @@
 <?php
 /* @var $this ResidentsController */
 /* @var $data Residents */
+$baseUrl = Yii::app()->theme->baseUrl; 
+
+if (isset($data->profile_picture) && !empty($data->profile_picture)) {
+	$publishedUrl = Yii::app()->assetManager->publish($data->profile_picture);
+}
 ?>
 
-<div class="view">
+<div class="view trans-menu-panel">
+	<div class="pull-left" style="width: 60%; margin:20px;font-size: 15px;">
+		<strong class='trans-panel-title' style="font-size: 20px;">
+			<?php echo sprintf("%s. %s %s", $data->salutation, $data->firstname , $data->middle_name , $data->lastname); ?>
+		</strong>
+		<div style='margin: 10px 0px'>
+			Contact # : <?php echo $data->mobile_phone_number ?>
+		</div>
+		<div style='margin: 10px 0px'>
+			Age : <?php echo $data->getAge() ?>
+		</div>
+		<div style='margin: 10px 0px'>
+			Address : <?php echo sprintf("%s %s %s %s, %s", $data->house_number , $data->street_name , $data->barangay_name , $data->town , $data->province  , $data->country) ?>
+		</div>
+	</div>
+	<div class="pull-left" style="width: 30%;">
+		<?php if (isset($data->profile_picture) && !empty($data->profile_picture)): ?>
+			<?php echo CHtml::image($publishedUrl, '' ,array("class"=>"img-polaroid","style"=>"height:200px")); ?>	
+		<?php endif ?>
+		<?php if (!isset($data->profile_picture) || empty($data->profile_picture)): ?>
+			<?php echo CHtml::image($baseUrl.'/uploads/not available.png','', array("class"=>"img-polaroid","style"=>"height:200px")); ?>
+		<?php endif ?>
+	</div>
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id')); ?>:</b>
-	<?php echo CHtml::link(CHtml::encode($data->id), array('view', 'id'=>$data->id)); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('username')); ?>:</b>
-	<?php echo CHtml::encode($data->username); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('password')); ?>:</b>
-	<?php echo CHtml::encode($data->password); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('salutation')); ?>:</b>
-	<?php echo CHtml::encode($data->salutation); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('firstname')); ?>:</b>
-	<?php echo CHtml::encode($data->firstname); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('lastname')); ?>:</b>
-	<?php echo CHtml::encode($data->lastname); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('middle_name')); ?>:</b>
-	<?php echo CHtml::encode($data->middle_name); ?>
-	<br />
-
+	<div class="clearfix"></div>
 	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('birthday')); ?>:</b>
 	<?php echo CHtml::encode($data->birthday); ?>

@@ -118,12 +118,7 @@ class BarangayOfficials extends CActiveRecord
 	}
 	public function beforeSave()
 	{
-		if ($this->isNewRecord) {
-			$this->term_from = date_create_from_format("m/d/Y",$this->term_from);
-			$this->term_from = $this->term_from->format("Y-m-d H:i:s");
-			$this->term_to = date_create_from_format("m/d/Y",$this->term_to);
-			$this->term_to = $this->term_to->format("Y-m-d H:i:s");
-		}
+
 		$this->position = strtolower($this->position);
 		parent::beforeSave();
 		return true;

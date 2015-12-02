@@ -7,6 +7,7 @@ class m150929_175632_create_residents_table extends CDbMigration
 	{
 		$this->createTable("tbl_residents",array(
 			"id"=>"pk",
+			"profile_picture"=>"string",
 			"username"=>"string not null",
 			"password"=>"string not null",
 			"salutation"=>"string not null",
@@ -39,7 +40,7 @@ class m150929_175632_create_residents_table extends CDbMigration
 		$this->insert("tbl_residents",array(
 				"username"=>"admin",
 				"password"=>md5("admin"),
-				"salutation"=>"Mr.",
+				"salutation"=>"Mr",
 				"firstname"=>"John",
 				"lastname"=>"Doe",
 				"middle_name"=>"Smith",

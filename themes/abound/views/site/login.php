@@ -44,12 +44,8 @@ $baseUrl = Yii::app()->theme->baseUrl;
                 </div>
                 <?php $this->endWidget(); ?>
             </div>
-            <div class="span6" style="
-    border-left: 5px solid #808080;
-    padding-left: 20px;
-    min-height: 252px;
-">
-                <a href="/register" type="button" class="btn btn-success" style="font-size: 18px;padding: 10px;" >
+            <div class="span6" style="border-left: 5px solid #808080;padding-left: 20px;min-height: 252px;">
+                <a href="/register/form" type="button" class="btn btn-success" style="font-size: 18px;padding: 10px;" >
                 <img src="<?php echo $baseUrl ?>/img/Male-user-add-icon.png">
                     Register New Record
                 </a>

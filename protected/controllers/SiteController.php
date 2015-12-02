@@ -42,7 +42,7 @@ class SiteController extends Controller
 	 */
 	public function actionIndex()
 	{
-
+		$this->layout = "column2";		
 		$punongbarangay = "";
 		$secretary = "";
 		$criteriaPunongbarangay = new CDbCriteria;
@@ -64,25 +64,7 @@ class SiteController extends Controller
 			$barangayOfficialsLink = CHtml::link('Click here', array('/barangayOfficials'));
 			throw new CHttpException(404,"Cant find secretary record."."Please register a <strong>secretary</strong> official. <br>".$barangayOfficialsLink);
 		}
-
-		$punongbarangayFull = sprintf("%s %s . %s",ucwords($punongBarangaMdl->firstname) ,ucwords($punongBarangaMdl->middlename[0]),ucwords($punongBarangaMdl->lastname) );
-		$secretaryFull = sprintf("%s %s . %s",ucwords($secretary->firstname) ,ucwords($secretary->middlename[0]),ucwords($secretary->lastname) );
-
-		$model = Residents::model()->findByAttributes(array('username'=>Yii::app()->user->id));
-
-		$this->layout = "no_layout";
-		$dompdf = new DOMPDF();
-		$dompdf->load_html($this->render("//print/barangayclearance",compact('model','punongbarangayFull','secretaryFull'),true));
-		$dompdf->render();
-
-		$pdfOutput = $dompdf->output();
-		$pdfFileName = sys_get_temp_dir().DIRECTORY_SEPARATOR.Yii::app()->user->id.'-barangay-clearance.pdf';
-		file_put_contents($pdfFileName, $pdfOutput);
-		$barangayClearanceFilePublished = Yii::app()->assetManager->publish($pdfFileName);
-
-		$this->layout = "column2";
-
-		$this->render('index',compact("barangayClearanceFilePublished"));
+		$this->render('index');
 	}
 
 	/**
