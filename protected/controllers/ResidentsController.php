@@ -27,12 +27,8 @@ class ResidentsController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+			array('allow',
+				'actions'=>array('create','update','list','view'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -120,11 +116,19 @@ class ResidentsController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
+	public function actionList()
 	{
-		$dataProvider=new CActiveDataProvider('Residents');
+		$model = new Residents();
+		$searchKey = @$_POST['searchField'];
+		if (Yii::app()->request->isPostRequest) {
+			foreach ($model->attributes as $key => $value) {
+				$model->$key = $_POST['searchField'];
+			}
+		}
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+			'dataProvider'=>$model->searchResidentList(),
+			'model'=>$model,
+			'searchKey'=>$searchKey,
 		));
 	}
 

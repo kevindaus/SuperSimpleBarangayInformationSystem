@@ -40,9 +40,12 @@ $baseUrl = Yii::app()->theme->baseUrl;
 				    'error'=>array('block'=>true, 'fade'=>true, 'closeText'=>'×'), // success, info, warning, error or danger
 				    'success'=>array('block'=>true, 'fade'=>true, 'closeText'=>'×'), // success, info, warning, error or danger
 			    ),
+			    'htmlOptions'=>array(
+			    	'enctype'=>"multipart/form-data"
+		    	)
 			)); 
 		?>
-
+<!-- 
 		<fieldset>
 			<legend>Account Information : <small style="color: black">You will be needing this to generate a barangay clearance</small></legend>
 		</fieldset>
@@ -73,6 +76,25 @@ $baseUrl = Yii::app()->theme->baseUrl;
 			<div style="text-align:left" class="span6">
 				<?php echo $form->passwordField($residentRecord,'retypePassword'); ?>
 	    		<br><?php echo $form->error($residentRecord,'retypePassword'); ?>
+			</div>
+			<div class="clearfix"></div>
+		</div>
+ -->
+
+ 		<fieldset>
+			<legend>Resident Picture</legend>
+		</fieldset>
+		<div>
+			<div style="text-align:right" class="span3">
+	    		<?php echo $form->labelEx($residentRecord,'profile_picture'); ?>
+			</div>
+			<div style="text-align:left" class="span6">
+				 <?php 
+					 $this->widget('ext.xphoto.XPhoto',array(
+					    'model'=>$residentRecord,
+					    'attribute'=>'profile_picture',
+					));
+				 ?>
 			</div>
 			<div class="clearfix"></div>
 		</div>

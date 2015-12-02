@@ -48,12 +48,6 @@ class BarangayOfficialsController extends Controller
 	public function actionIndex()
 	{
 	   $model=new BarangayOfficials('create');
-		
-	    if(isset($_POST['ajax']) && $_POST['ajax']==='barangay-officials-create-form')
-	    {
-	        echo CActiveForm::validate($model);
-	        Yii::app()->end();
-	    }
 	    if(isset($_POST['BarangayOfficials']))
 	    {
 	        $model->attributes=$_POST['BarangayOfficials'];
@@ -65,7 +59,16 @@ class BarangayOfficialsController extends Controller
                 $uploadedFileObject->saveAs($ouputfile);
                 $model->profile_image = $newFilename;
             }
-	        /*save to themes uploaded*/
+            /* @TODO - term from and term to */
+            // $model->term_from
+            // $model->term_to
+            $termFrom  = sprintf("first day of %s %s",$_POST['term_from_month'] , $_POST['term_from_year']);
+            $termTo  = sprintf("last day of %s %s",$_POST['term_to_month'] , $_POST['term_to_year']);
+			$termFrom = date("Y-m-d H:i:s" , strtotime($termFrom));
+			$termTo = date("Y-m-d H:i:s" , strtotime($termTo));
+            $model->term_from = $termFrom;
+            $model->term_to = $termTo;
+
 	        /*save to model*/
 	        if($model->save())
 	        {

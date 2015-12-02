@@ -16,10 +16,10 @@ $baseUrl = Yii::app()->theme->baseUrl;
 <div class="span10 offset1">
 
 
-<?php if (isset($model->profile_image)): ?>
+<?php if (!empty($model->profile_image)): ?>
     <?php echo CHtml::image($baseUrl."/uploads/".$model->profile_image, $model->firstname.' '.$model->middlename.' '.$model->lastname.' image', array('class'=>"img-polaroid","style"=>"height: 169px;")); ?>    
 <?php endif ?>
-<?php if (!$model->profile_image ): ?>
+<?php if (empty($model->profile_image) ): ?>
     <?php echo CHtml::image($baseUrl."/uploads/not available.png", "image not available", array('class'=>"img-polaroid","style"=>"height: 169px;")); ?>    
 <?php endif ?>
 

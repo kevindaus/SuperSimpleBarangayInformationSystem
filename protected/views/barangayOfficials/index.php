@@ -3,6 +3,29 @@
 /* @var $model BarangayOfficials */
 /* @var $form CActiveForm */
 $baseUrl = Yii::app()->theme->baseUrl; 
+
+$monthsList = array(
+                "January" => 'January',
+                "February" => 'February',
+                "March" => 'March',
+                "April" => 'April',
+                "May" => 'May',
+                "June" => 'June',
+                "July" => 'July',
+                "August" => 'August',
+                "September" => 'September',
+                "October" => 'October',
+                "November" => 'November',
+                "December" => 'December'
+            );
+
+$yearListRange = range(2001, intval(date("Y")) + 20);
+$yearList = [];
+foreach ($yearListRange as $key => $value) {
+	$yearList[$value] = $value;
+}
+
+
 ?>
 <style type="text/css">	
 	label{
@@ -25,11 +48,6 @@ $baseUrl = Yii::app()->theme->baseUrl;
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'barangay-officials-create-form',
-	// Please note: When you enable ajax validation, make sure the corresponding
-	// controller action is handling ajax validation correctly.
-	// See class documentation of CActiveForm for details on this,
-	// you need to use the performAjaxValidation()-method described there.
-	'enableAjaxValidation'=>true,
     'htmlOptions'=>array(
         'enctype'=>'multipart/form-data'
     )
@@ -111,20 +129,8 @@ $baseUrl = Yii::app()->theme->baseUrl;
 			<?php echo $form->labelEx($model,'term_from'); ?>
 		</div>
 		<div class="span6">
-			<?php 
-				$this->widget('zii.widgets.jui.CJuiDatePicker',array(
-				  'model'=>$model,
-				  'attribute'=>'term_from',
-				  'options'=>array(
-				      'showAnim'=>'fold',
-				      'changeMonth'=>true,
-				      'changeYear'=>true,
-				  ),
-				  'htmlOptions'=>array(
-				      'style'=>'height:20px;'
-				  ),
-				));		
-			?>
+			<?php echo CHtml::dropDownList('term_from_month', '', $monthsList,array('prompt'=>"Select month")); ?>
+			<?php echo CHtml::dropDownList('term_from_year', '', $yearList,array('prompt'=>"Select year")); ?>
 			<br>
 			<?php echo $form->error($model,'term_from'); ?>
 		</div>
@@ -135,20 +141,9 @@ $baseUrl = Yii::app()->theme->baseUrl;
 			<?php echo $form->labelEx($model,'term_to'); ?>
 		</div>
 		<div class="span6">
-			<?php 
-				$this->widget('zii.widgets.jui.CJuiDatePicker',array(
-				  'model'=>$model,
-				  'attribute'=>'term_to',
-				  'options'=>array(
-				      'showAnim'=>'fold',
-				      'changeMonth'=>true,
-				      'changeYear'=>true,
-				  ),
-				  'htmlOptions'=>array(
-				      'style'=>'height:20px;'
-				  ),
-				));		
-			?>
+			<?php echo CHtml::dropDownList('term_to_month', '', $monthsList,array('prompt'=>"Select month")); ?>
+			<?php echo CHtml::dropDownList('term_to_year', '', $yearList,array('prompt'=>"Select year")); ?>
+
 			<br>
 			<?php echo $form->error($model,'term_to'); ?>
 		</div>

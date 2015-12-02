@@ -42,7 +42,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
       </div>
 
       <div class='trans-menu-panel'>
-        <a href="/residents/admin">
+        <a href="/residents/list">
         <div class="span3"><img src="<?php echo $baseUrl ?>/img/people-icon.png"></div>
         <div class="span9 " >
             <div class='trans-panel-title' style="font-size: 26px;">
@@ -50,6 +50,20 @@ $baseUrl = Yii::app()->theme->baseUrl;
             </div>
             <div class='trans-panel-content'>
               View resident records
+            </div>
+        </div>
+        </a>  
+        <div class="clearfix"></div>
+      </div>
+      <div class='trans-menu-panel'>
+        <a href="/register/index">
+        <div class="span3"><img src="<?php echo $baseUrl ?>/img/user-add-icon.png"></div>
+        <div class="span9 " >
+            <div class='trans-panel-title' style="font-size: 26px;">
+                Register Resident
+            </div>
+            <div class='trans-panel-content'>
+                Add resident records
             </div>
         </div>
         </a>  
@@ -140,6 +154,26 @@ $baseUrl = Yii::app()->theme->baseUrl;
       <div class="clearfix"></div>
     </div>
     <?php endif ?>
+    
+
+    <?php if (Yii::app()->user->id === "admin"): ?>
+    <div class='trans-menu-panel' >
+      <a href="/organizationalChart">
+      <div class="span3"><img src="<?php echo $baseUrl ?>/img/org-chart.png"></div>
+      <div class="span9 ">
+          <div class='trans-panel-title' style="font-size: 25px;">
+            Organizational Chart
+          </div>
+          <div class='trans-panel-content'>
+            View organizational chart
+          </div>
+      </div>
+      </a>
+      <div class="clearfix"></div>
+    </div>
+    <?php endif ?>
+
+
 
     </div>
 

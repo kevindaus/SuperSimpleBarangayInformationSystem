@@ -30,6 +30,7 @@
  * @property string $resident_since
  * @property string $location_longitude
  * @property string $location_latitude
+ * @property string $profile_picture
  * @property string $date_record_created
  * @property string $date_record_updated
  */
@@ -43,6 +44,7 @@ class Residents extends CActiveRecord
 	public $residentSinceMonth;
 	public $residentSinceYear;
 	public $country = "Philippines";
+	public $profile_picture;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -59,16 +61,16 @@ class Residents extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, salutation, firstname, lastname, middle_name, blood_type,retypePassword,house_number,street_name,barangay_name,town,province,country', 'required', 'on'=>'createNewRecord' ),
+			array('salutation, firstname, lastname, middle_name, blood_type,house_number,street_name,barangay_name,town,province,country', 'required', 'on'=>'createNewRecord' ),
 			array('username', 'unique', 'on'=>'createNewRecord' ),
 			array('username, password, salutation, firstname, lastname, middle_name, postal_code, mobile_phone_number, house_number, street_name, barangay_name, town, province, country, email_address, employment_type, employment_company, occupation, height, weight, blood_type', 'length', 'max'=>255, 'on'=>'createNewRecord' ),
 			array('mobile_phone_number,height,weight', 'numerical', 'on'=>'createNewRecord' ),
 			array('email_address', 'email', 'on'=>'createNewRecord' ),
 			array('birthday', 'validateDateOfBirth', 'on'=>'createNewRecord' ),
 			array('resident_since', 'validateDateOfResidency', 'on'=>'createNewRecord' ),
-			array('birthday, resident_since, date_record_created, date_record_updated', 'safe'),
 			array('password','checkPasswordEquality','on'=>'createNewRecord' ),
-			array('location_longitude,location_latitude,retypePassword,birthdayDate,birthdayMonth,birthdayYear,residentSinceDate,residentSinceMonth,residentSinceYear,birthday, resident_since, date_record_created, date_record_updated','safe','on'=>'createNewRecord' ),
+			array('profile_picture,location_longitude,location_latitude,retypePassword,birthdayDate,birthdayMonth,birthdayYear,residentSinceDate,residentSinceMonth,residentSinceYear,birthday, resident_since, date_record_created, date_record_updated','safe','on'=>'createNewRecord' ),
+			array('profile_picture,birthday, resident_since, date_record_created, date_record_updated', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id, username, password, salutation, firstname, lastname, middle_name, birthday, postal_code, mobile_phone_number, house_number, street_name, barangay_name, town, province, country, email_address, employment_type, employment_company, occupation, height, weight, blood_type, resident_since, date_record_created, date_record_updated', 'safe', 'on'=>'search'),
@@ -111,6 +113,7 @@ class Residents extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
+			'profile_picture' => 'Profile picture',
 			'username' => 'Username',
 			'password' => 'Password',
 			'salutation' => 'Title',
@@ -235,5 +238,39 @@ class Residents extends CActiveRecord
 		  	)
 	  	);
 	}		
+	public function searchResidentList()
+	{
+
+		$criteria=new CDbCriteria;
+
+		$criteria->compare('id',$this->id);
+		$criteria->compare('username',$this->username,true,"OR");
+		$criteria->compare('password',$this->password,true,"OR");
+		$criteria->compare('salutation',$this->salutation,true,"OR");
+		$criteria->compare('firstname',$this->firstname,true,"OR");
+		$criteria->compare('lastname',$this->lastname,true,"OR");
+		$criteria->compare('middle_name',$this->middle_name,true,"OR");
+		$criteria->compare('birthday',$this->birthday,true,"OR");
+		$criteria->compare('postal_code',$this->postal_code,true,"OR");
+		$criteria->compare('mobile_phone_number',$this->mobile_phone_number,true,"OR");
+		$criteria->compare('house_number',$this->house_number,true,"OR");
+		$criteria->compare('street_name',$this->street_name,true,"OR");
+		$criteria->compare('barangay_name',$this->barangay_name,true,"OR");
+		$criteria->compare('town',$this->town,true,"OR");
+		$criteria->compare('province',$this->province,true,"OR");
+		$criteria->compare('country',$this->country,true,"OR");
+		$criteria->compare('email_address',$this->email_address,true,"OR");
+		$criteria->compare('employment_type',$this->employment_type,true,"OR");
+		$criteria->compare('employment_company',$this->employment_company,true,"OR");
+		$criteria->compare('occupation',$this->occupation,true,"OR");
+		$criteria->compare('height',$this->height,true,"OR");
+		$criteria->compare('weight',$this->weight,true,"OR");
+		$criteria->compare('blood_type',$this->blood_type,true,"OR");
+		$criteria->compare('resident_since',$this->resident_since,true,"OR");
+		$criteria->addNotInCondition("username",array("admin"));
+		return new CActiveDataProvider($this, array(
+			'criteria'=>$criteria,
+		));		
+	}
 
 }
