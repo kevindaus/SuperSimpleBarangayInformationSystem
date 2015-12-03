@@ -17,13 +17,13 @@ class RegisterController extends Controller
 	{
 		return array(
 			array('allow',
-				'actions'=>array('index','form'),
+				'actions'=>array('form'),
 				'users'=>array('*'),
 			),
-			// array('allow',
-			// 	'actions'=>array('index'),
-			// 	'users'=>array('@'),
-			// ),
+			array('allow',
+				'actions'=>array('index'),
+				'users'=>array('@'),
+			),
 			array('deny',
 				'users'=>array('*'),
 			),
@@ -91,21 +91,12 @@ class RegisterController extends Controller
 	}
 	public function actionForm()
 	{
-        $dompdf = new DOMPDF();
-        $htmlOutput = $output = $this->renderPartial('form',null,true);
-        $dompdf->load_html($htmlOutput);
-        $dompdf->render();
-        $fileName= sys_get_temp_dir().uniqid("registration_form").".pdf";
-        file_put_contents($fileName , $dompdf->output());
-        $outputFile = Yii::app()->assetManager->publish($fileName);
-        $this->redirect($outputFile);            
-		/*create registration form*/
-		/*redirect to registration form*/
+		/*get registration form*/
+		$pdfFile  = Yii::getPathOfAlias("webroot.themes.abound.pdf").'/registration_form.pdf';
+		header("Content-type:application/pdf");
+		header("Content-Disposition:attachment;filename='Registration_form.pdf'");
+		echo file_get_contents($pdfFile);
 	}
-	public function actionView()
-	{
-        $htmlOutput = $output = $this->renderPartial('form',null,true);
-		echo $htmlOutput;
-	}
+
 
 }
