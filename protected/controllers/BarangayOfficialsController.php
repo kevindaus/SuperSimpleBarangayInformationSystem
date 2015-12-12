@@ -26,7 +26,7 @@ class BarangayOfficialsController extends Controller
 	{
 		return array(
 			array('allow',
-				'actions'=>array('index','list','delete','view'),
+				'actions'=>array('index','list','delete','view','update'),
 				'users'=>array('admin'),
 			),
 			array('deny',  
@@ -59,9 +59,6 @@ class BarangayOfficialsController extends Controller
                 $uploadedFileObject->saveAs($ouputfile);
                 $model->profile_image = $newFilename;
             }
-            /* @TODO - term from and term to */
-            // $model->term_from
-            // $model->term_to
             $termFrom  = sprintf("first day of %s %s",$_POST['term_from_month'] , $_POST['term_from_year']);
             $termTo  = sprintf("last day of %s %s",$_POST['term_to_month'] , $_POST['term_to_year']);
 			$termFrom = date("Y-m-d H:i:s" , strtotime($termFrom));
@@ -73,10 +70,43 @@ class BarangayOfficialsController extends Controller
 	        if($model->save())
 	        {
 	        	Yii::app()->user->setFlash("success","<strong>Saved</strong> : New record saved");
-	        	$this->redirect("/barangayOfficials");
+	        	$this->redirect(array("view",'id'=>$model->id));
 	        }
 	    }
 	    $this->render('index',array('model'=>$model));				
+	}
+	public function actionUpdate($barangayOfficialId)
+	{
+		$model = BarangayOfficials::model()->findByPk($barangayOfficialId);
+	    if(isset($_POST['BarangayOfficials']))
+	    {
+	    	$oldProfile = $model->profile_image;
+	        $model->attributes=$_POST['BarangayOfficials'];
+	        /*retrieve the uploaded file */
+            $uploadedFileObject = CUploadedFile::getInstance($model, 'profile_image');
+            if($uploadedFileObject){
+            	$newFilename = uniqid() . $uploadedFileObject->getName();
+                $ouputfile = Yii::getPathOfAlias("imageUploads") . '/'.$newFilename;
+                $uploadedFileObject->saveAs($ouputfile);
+                $model->profile_image = $newFilename;
+            }else{
+            	$model->profile_image = $oldProfile;
+            }
+            $termFrom  = sprintf("first day of %s %s",$_POST['term_from_month'] , $_POST['term_from_year']);
+            $termTo  = sprintf("last day of %s %s",$_POST['term_to_month'] , $_POST['term_to_year']);
+			$termFrom = date("Y-m-d H:i:s" , strtotime($termFrom));
+			$termTo = date("Y-m-d H:i:s" , strtotime($termTo));
+            $model->term_from = $termFrom;
+            $model->term_to = $termTo;
+
+	        /*save to model*/
+	        if($model->save())
+	        {
+	        	Yii::app()->user->setFlash("success","<strong>Saved</strong> : New record saved");
+	        	$this->redirect(array("view",'id'=>$model->id));
+	        }
+	    }
+	    $this->render('index',array('model'=>$model));
 	}
 	public function actionList()
 	{ 

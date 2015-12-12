@@ -142,28 +142,18 @@ var XPhoto = XPhotoClass({
 		* source: http://www.w3schools.com/tags/canvas_drawimage.asp
     	*/
     	var clipsize = this.getClipSizes();    	
-        // context.drawImage(
-        //     video, 
-        //     clipsize.sx, 
-        //     clipsize.sy, 
-        //     clipsize.swidth, 
-        //     clipsize.sheight, 
-        //     clipsize.x , 
-        //     clipsize.y, 
-        //     clipsize.width, 
-        //     clipsize.height
-        // );
         context.drawImage(
             video, 
-            0,
-            0, 
-            clipsize.swidth + 400,
-            clipsize.sheight+ 150,
+            clipsize.sx, 
+            clipsize.sy, 
+            clipsize.swidth, 
+            clipsize.sheight, 
             clipsize.x , 
             clipsize.y, 
             clipsize.width, 
             clipsize.height
         );
+
 
 
     	var dataURL = canvas.toDataURL();

@@ -24,6 +24,17 @@ $yearList = [];
 foreach ($yearListRange as $key => $value) {
 	$yearList[$value] = $value;
 }
+$term_from_year = 0;
+$term_to_year = 0;
+
+if ($model->isNewRecord) {
+	$term_from_year = date("Y");
+	$term_to_year = intval($term_from_year) +1 ;
+}else{
+	$term_from_year = date("Y",strtotime($model->term_from));
+	$term_to_year = date("Y",strtotime($model->term_to));
+}
+
 
 
 ?>
@@ -129,8 +140,8 @@ foreach ($yearListRange as $key => $value) {
 			<?php echo $form->labelEx($model,'term_from'); ?>
 		</div>
 		<div class="span6">
-			<?php echo CHtml::dropDownList('term_from_month', '', $monthsList,array('prompt'=>"Select month")); ?>
-			<?php echo CHtml::dropDownList('term_from_year', '', $yearList,array('prompt'=>"Select year")); ?>
+			<?php echo CHtml::dropDownList('term_from_month', 'October', $monthsList,array('prompt'=>"Select month","readonly"=>"readonly")); ?>
+			<?php echo CHtml::dropDownList('term_from_year', $term_from_year, $yearList,array('prompt'=>"Select year")); ?>
 			<br>
 			<?php echo $form->error($model,'term_from'); ?>
 		</div>
@@ -141,8 +152,8 @@ foreach ($yearListRange as $key => $value) {
 			<?php echo $form->labelEx($model,'term_to'); ?>
 		</div>
 		<div class="span6">
-			<?php echo CHtml::dropDownList('term_to_month', '', $monthsList,array('prompt'=>"Select month")); ?>
-			<?php echo CHtml::dropDownList('term_to_year', '', $yearList,array('prompt'=>"Select year")); ?>
+			<?php echo CHtml::dropDownList('term_to_month', 'October', $monthsList,array('prompt'=>"Select month","readonly"=>"readonly")); ?>
+			<?php echo CHtml::dropDownList('term_to_year', $term_to_year, $yearList,array('prompt'=>"Select year")); ?>
 
 			<br>
 			<?php echo $form->error($model,'term_to'); ?>

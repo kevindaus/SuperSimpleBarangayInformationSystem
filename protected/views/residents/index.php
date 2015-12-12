@@ -14,7 +14,6 @@ $this->menu=array(
 <style type="text/css">
 	
 .view {
-
 }
 .view h1 {
 	color:#1D388E;

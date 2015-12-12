@@ -93,6 +93,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
 					 $this->widget('ext.xphoto.XPhoto',array(
 					    'model'=>$residentRecord,
 					    'attribute'=>'profile_picture',
+					    'capture'=>false,
 					));
 				 ?>
 			</div>
@@ -107,7 +108,15 @@ $baseUrl = Yii::app()->theme->baseUrl;
 	    		<?php echo $form->labelEx($residentRecord,'salutation'); ?>
 			</div>
 			<div style="text-align:left" class="span6">
-			<?php echo CHtml::activeDropDownList($residentRecord, 'salutation', array("Ms"=>"Ms","Mrs"=>"Mrs","Mr"=>"Mr"), array("prompt"=>'Title')); ?>
+			<?php echo CHtml::activeDropDownList(
+				$residentRecord, 
+				'salutation', array(
+					"Mr"=>"Mr",
+					"Prof"=>"Prof",
+					"Dr"=>"Dr",
+					"Mrs"=>"Mrs",
+					"Ms"=>"Ms",
+				), array("prompt"=>'Title')); ?>
 	    		<br><?php echo $form->error($residentRecord,'salutation'); ?>
 			</div>
 			<div class="clearfix"></div>

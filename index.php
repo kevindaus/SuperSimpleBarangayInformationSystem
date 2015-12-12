@@ -4,7 +4,7 @@ define('YII_DEBUG', true);
 
 // change the following paths if necessary
 $autoLoad=dirname(__FILE__).'/protected/vendor/autoload.php';
-$yii=dirname(__FILE__).'/protected/framework/yiilite.php';
+$yii=dirname(__FILE__).'/protected/framework/yii.php';
 $config=dirname(__FILE__).'/protected/config/main.php';
 
 

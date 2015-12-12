@@ -27,7 +27,11 @@ $('.search-form form').submit(function(){
 ?>
 
 
-
+<style type="text/css">
+	table.detail-view th{
+		    text-align: left;
+	}
+</style>
 
 <div class="update-barangay-info">
 
@@ -36,26 +40,6 @@ $('.search-form form').submit(function(){
 
 <div class="row">
 <div class="span10 offset1">
-
-
-
-
-<h1>Manage Residents</h1>
-
-<p class='hidden'>
-You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
-or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
-
-<?php //echo CHtml::link('<span class=" icon-search"></span>Advanced Search','#',array('class'=>'btn btn-default search-button')); ?>
-<div class="search-form" style="display:none">
-	<?php $this->renderPartial('_search',array(
-		'model'=>$model,
-	)); ?>
-</div><!-- search-form -->
-
-<hr>
-
 <?php
 $this->widget('bootstrap.widgets.TbAlert', array(
     'fade'=>true, // use transitions?
@@ -65,44 +49,45 @@ $this->widget('bootstrap.widgets.TbAlert', array(
     ),
 )); ?>
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
+
+<h1 style="text-align:center">List of Residents</h1>
+<br>
+
+<div style="background-color:white;padding: 20px;border-radius: 20px;">
+<div class="pull-left">
+	<div class="btn-group">
+		<?php echo CHtml::link("<span class='icon-th'></span>", array('grid'), array('class'=>'btn btn-default')); ?>
+		<?php echo CHtml::link("<span class='icon-list'></span>", array('list'), array('class'=>'btn btn-default active')); ?>
+	</div>
+	
+	
+</div>
+
+
+<?php echo CHtml::beginForm(Yii::app()->request->requestUri, 'post',array('class'=>'form-search form-horizontal pull-right')); ?>
+    <div class="input-append span12">
+        <input type="text" class="search-query" placeholder="Search" name='searchField'>
+        <button type="submit" class="btn"><i class="icon-search"></i></button>
+    </div>
+<?php echo CHtml::endForm(); ?>
+
+<div class="clearfix"></div>	
+
+<?php if (isset($_POST['searchField'])): ?>
+	<h4>
+	Showing results for "<i><?php echo $searchKey ?></i>"
+	</h4>	
+<?php endif ?>
+
+
+<?php $this->widget('zii.widgets.CListView', array(
 	'id'=>'residents-grid',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
-	'columns'=>array(
-		// 'id',
-		// 'username',
-		// 'password',
-		'salutation',
-		'firstname',
-		'lastname',
-		'mobile_phone_number',
-		'employment_type',
-		/*
-		'middle_name',
-		'birthday',
-		'postal_code',
-		'house_number',
-		'street_name',
-		'barangay_name',
-		'town',
-		'province',
-		'country',
-		'email_address',
-		'employment_company',
-		'occupation',
-		'height',
-		'weight',
-		'blood_type',
-		'resident_since',
-		'date_record_created',
-		'date_record_updated',
-		*/
-		array(
-			'class'=>'CButtonColumn',
-		),
-	),
+	'itemView'=>'_view',
+	'dataProvider'=>$dataProvider,
 )); ?>
+
+</div>
+
 
 
 </div>

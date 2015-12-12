@@ -58,7 +58,8 @@
             <?php echo $content; ?>
     </div>
 </section>  
-
+<br>
+<br>
 <!-- Require the footer -->
 <?php //require_once('tpl_footer.php') ?>
 

@@ -12,13 +12,9 @@
 
 <div class="update-barangay-info">
 
-
-
-
-
 <div class="row">
 <div class="span10 offset1">
-<h1>List of all officials</h1>	
+<h1 style="text-align:center">List of all officials</h1>	
 <hr>
 
 <?php
@@ -48,19 +44,22 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         array(
         	'name'=>'term_from',
         	'header'=>'Term from',
-        	'value'=>'date("Y-m-d H:i:s", strtotime($data->term_from))',
-        	// 'value'=>'$data->term_from',
+        	'value'=>'date("F d,Y", strtotime($data->term_from))',
     	),
         array(
             'name'=>'term_to',
             'header'=>'Term from',
-            'value'=>'date("Y-m-d H:i:s", strtotime($data->term_to))',
+            'value'=>'date("F d,Y", strtotime($data->term_to))',
         ),
         array(
-            'header'=>'Action',
+            'header'=>'',
+            'type'=>'raw',
+            'value'=>'CHtml::link("edit", array("/barangayOfficials/update","barangayOfficialId"=>$data->id),array())',
+        ),
+        array(
+            'header'=>'',
         	'type'=>'raw',
         	'value'=>'CHtml::link("delete", array("/barangayOfficials/delete","barangayOfficialId"=>$data->id),array("class"=>"deletelink","confirm"=>"Are you sure you want to delete this record ? "))',
-
     	),
         // array(
         //     'class'=>'bootstrap.widgets.TbButtonColumn',

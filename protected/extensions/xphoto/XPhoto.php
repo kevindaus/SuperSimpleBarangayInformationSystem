@@ -55,11 +55,11 @@ class XPhoto extends CWidget{
 	/**
 	* width of photo canvas : in pixel
 	*/
-	public $width = 550;
+	public $width = 300;
 	/**
 	* height of photo canvas : in pixel
 	*/
-	public $height = 300;
+	public $height = 350;
 	/**
 	* ID of canvas element
 	*/

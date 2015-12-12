@@ -40,11 +40,24 @@ $baseUrl = Yii::app()->theme->baseUrl;
 		<div class='offset1 span8  trans-menu-panel'>
 			<?php foreach ($barangayOfficialsModels as $key => $value): ?>
 				<?php if (strtolower($value->position) === 'punong barangay'): ?>
+			        <?php if (!empty($value->profile_image)): ?>
+			        	<a href="<?php echo $this->createUrl("barangayOfficials/view",array("id"=>$value->id)) ?>">
+				            <?php echo CHtml::image($baseUrl."/uploads/".$value->profile_image, $value->firstname.' '.$value->middlename.' '.$value->lastname.' image', array('class'=>"img-polaroid","style"=>"height: 169px;")); ?>
+						</a>
+			        <?php endif ?>
+			        <?php if (empty($value->profile_image) ): ?>
+			        	<a href="<?php echo $this->createUrl("barangayOfficials/view",array("id"=>$value->id)) ?>">
+			            	<?php echo CHtml::image($baseUrl."/uploads/not available.png", "image not available", array('class'=>"img-polaroid","style"=>"height: 169px;")); ?>    
+			            </a>
+			        <?php endif ?>
+			        <br>
+			        <br>
 					<strong style="font-size: 30px">
 						<?php echo strtoupper(sprintf("Hon. %s %s", $value->firstname , $value->lastname)) ?>
 					</strong> 
 					<br>
-					<small><?php echo strtoupper($value->position) ?></small>
+					<strong><?php echo strtoupper($value->position) ?></strong>
+					<?php break; ?>
 				<?php endif ?>
 			<?php endforeach ?>
 		</div>
@@ -53,11 +66,24 @@ $baseUrl = Yii::app()->theme->baseUrl;
 			<?php foreach ($barangayOfficialsModels as $key => $value): ?>
 				<?php if (strtolower($value->position) !== 'punong barangay'): ?>
 					<div class="trans-menu-panel" style="width: 249.953px;float:left">
+				        <?php if (!empty($value->profile_image)): ?>
+				        	<a href="<?php echo $this->createUrl("barangayOfficials/view",array("id"=>$value->id)) ?>">
+				            	<?php echo CHtml::image($baseUrl."/uploads/".$value->profile_image, $value->firstname.' '.$value->middlename.' '.$value->lastname.' image', array('class'=>"img-polaroid","style"=>"height: 169px;")); ?>
+				        	</a>
+				        <?php endif ?>
+				        <?php if (empty($value->profile_image) ): ?>
+				        	<a href="<?php echo $this->createUrl("barangayOfficials/view",array("id"=>$value->id)) ?>">
+				            	<?php echo CHtml::image($baseUrl."/uploads/not available.png", "image not available", array('class'=>"img-polaroid","style"=>"height: 169px;")); ?>    
+				        	</a>
+				        <?php endif ?>
+				        <br>
+				        <br>
+
 						<strong style="font-size: 15px">
 							<?php echo strtoupper(sprintf("Hon. %s %s", $value->firstname , $value->lastname)) ?>
 						</strong> 
 						<br>
-						<small><?php echo strtoupper($value->position) ?></small>
+						<strong><?php echo strtoupper($value->position) ?></strong>
 					</div>
 				<?php endif ?>
 			<?php endforeach ?>

@@ -73,6 +73,8 @@ class Residents extends CActiveRecord
 			array('profile_picture,birthday, resident_since, date_record_created, date_record_updated', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
+			array('birthdayDate,birthdayMonth,birthdayYear,residentSinceDate,residentSinceMonth,residentSinceYear', 'numerical', 'on'=>'update'),
+			array('id, username, password, salutation, firstname, lastname, middle_name, birthday, postal_code, mobile_phone_number, house_number, street_name, barangay_name, town, province, country, email_address, employment_type, employment_company, occupation, height, weight, blood_type, resident_since, date_record_created, date_record_updated,birthdayDate,birthdayMonth,birthdayYear,residentSinceDate,residentSinceMonth,residentSinceYear', 'safe', 'on'=>'update'),
 			array('id, username, password, salutation, firstname, lastname, middle_name, birthday, postal_code, mobile_phone_number, house_number, street_name, barangay_name, town, province, country, email_address, employment_type, employment_company, occupation, height, weight, blood_type, resident_since, date_record_created, date_record_updated', 'safe', 'on'=>'search'),
 		);
 	}
@@ -192,7 +194,7 @@ class Residents extends CActiveRecord
 		$criteria->compare('resident_since',$this->resident_since,true);
 		$criteria->compare('date_record_created',$this->date_record_created,true);
 		$criteria->compare('date_record_updated',$this->date_record_updated,true);
-
+		$criteria->addNotInCondition("username",array("admin"));
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
 		));
@@ -210,17 +212,21 @@ class Residents extends CActiveRecord
 	}
 	public function beforeSave()
 	{
-		if ($this->scenario === "createNewRecord") {
-			/*format birthday*/
-			$dateObj = date_create(sprintf("%s-%s-%s",$this->birthdayYear,$this->birthdayMonth,$this->birthdayDate));
-			$this->birthday = date_format($dateObj,"Y-m-d H:i:s");
-			/*format residency*/
-			$resiDtObj = date_create(sprintf("%s-%s-%s",$this->residentSinceYear,$this->residentSinceMonth,$this->residentSinceDate));
-			$this->resident_since = date_format($resiDtObj,"Y-m-d H:i:s");
-			$this->password = md5($this->password);
-
+		$isValid = true;
+		if ($this->scenario === "createNewRecord" || $this->scenario === "update" ) {
+			try {
+				/*format birthday*/
+				$dateObj = date_create(sprintf("%s-%s-%s",$this->birthdayYear,$this->birthdayMonth,$this->birthdayDate));
+				$this->birthday = date_format($dateObj,"Y-m-d H:i:s");
+				/*format residency*/
+				$resiDtObj = date_create(sprintf("%s-%s-%s",$this->residentSinceYear,$this->residentSinceMonth,$this->residentSinceDate));
+				$this->resident_since = date_format($resiDtObj,"Y-m-d H:i:s");
+				$this->password = md5($this->password);				
+			} catch (Exception $e) {
+				$isValid = true;
+			}
 		}
-		return parent::beforeSave();
+		return $isValid;
 	}
 	public function getAge()
 	{

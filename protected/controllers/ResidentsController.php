@@ -28,7 +28,7 @@ class ResidentsController extends Controller
 	{
 		return array(
 			array('allow',
-				'actions'=>array('create','update','list','view'),
+				'actions'=>array('create','update','list','view','grid'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -82,20 +82,50 @@ class ResidentsController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+		Yii::import('application.libs.Zebra_Image.Zebra_Image');
 		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['Residents']))
 		{
+			$oldProfilePic = $model->profile_picture;
 			$model->attributes=$_POST['Residents'];
-			if($model->save())
+			$model->scenario = "update";
+
+			if (!empty($model->profile_picture) && strpos($model->profile_picture,":image") ) {
+				/*process profile picture*/
+				$foto = str_replace('data:image/png;base64,', '', $model->profile_picture);
+				$foto = str_replace(' ', '+', $foto);
+				$data_foto = base64_decode($foto);				
+				$currentUserFileName = sprintf("%s_%s_%s_%s", $model->firstname , $model->middle_name  , $model->lastname,uniqid());
+				$filename = $currentUserFileName.'.png';
+				$filepath = YiiBase::getPathOfAlias("webroot.themes.abound.uploads").'/'.$filename;
+				$writeToDisk = file_put_contents($filepath, $data_foto);				
+				//remove extra space
+				//
+				$image = new Zebra_Image();
+				$image->source_path = $filepath;
+				$image->target_path = $filepath;
+				$image->jpeg_quality = 100;
+				$image->preserve_aspect_ratio = true;
+				$image->enlarge_smaller_images = true;
+				$image->preserve_time = true;
+				$image->resize(300, 300, ZEBRA_IMAGE_CROP_TOPLEFT);
+				// 
+				// 
+				$model->profile_picture = basename($filepath);
+			}else{
+				$model->profile_picture = $oldProfilePic;
+			}
+			/*proceed saving*/
+			if($model->save()){
 				$this->redirect(array('view','id'=>$model->id));
+			}else{
+				Yii::app()->user->setFlash("error",CHtml::errorSummary($model));
+				$this->redirect(array('update','id'=>$model->id));
+			}
 		}
 
 		$this->render('update',array(
-			'model'=>$model,
+			'residentRecord'=>$model,
 		));
 	}
 
@@ -118,18 +148,53 @@ class ResidentsController extends Controller
 	 */
 	public function actionList()
 	{
-		$model = new Residents();
+		$model = new Residents('search');
+		$model->unsetAttributes();
 		$searchKey = @$_POST['searchField'];
+		$dataProvider = $model->search();
 		if (Yii::app()->request->isPostRequest) {
-			foreach ($model->attributes as $key => $value) {
-				$model->$key = $_POST['searchField'];
+			if (isset($_POST['searchField'])) {
+				foreach ($model->attributes as $key => $value) {
+					$model->$key = $_POST['searchField'];
+				}
+				$dataProvider =$model->searchResidentList();
+				$model->unsetAttributes();
 			}
 		}
-		$this->render('index',array(
-			'dataProvider'=>$model->searchResidentList(),
+		if (isset($_GET['Residents'])) {
+			$model->attributes = $_GET['Residents'];
+			$dataProvider = $model->search();
+		}
+		$this->render('admin',array(
+			'dataProvider'=>$dataProvider,
 			'model'=>$model,
 			'searchKey'=>$searchKey,
 		));
+	}
+	public function actionGrid()
+	{
+		$model = new Residents('search');
+		$model->unsetAttributes();
+		$searchKey = @$_POST['searchField'];
+		$dataProvider = $model->search();
+		if (Yii::app()->request->isPostRequest) {
+			if (isset($_POST['searchField'])) {
+				foreach ($model->attributes as $key => $value) {
+					$model->$key = $_POST['searchField'];
+				}
+				$dataProvider =$model->searchResidentList();
+				$model->unsetAttributes();
+			}
+		}
+		if (isset($_GET['Residents'])) {
+			$model->attributes = $_GET['Residents'];
+			$dataProvider = $model->search();
+		}
+		$this->render('grid',array(
+			'dataProvider'=>$dataProvider,
+			'model'=>$model,
+			'searchKey'=>$searchKey,
+		));		
 	}
 
 	/**
@@ -138,7 +203,7 @@ class ResidentsController extends Controller
 	public function actionAdmin()
 	{
 		$model=new Residents('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();
 		if(isset($_GET['Residents']))
 			$model->attributes=$_GET['Residents'];
 

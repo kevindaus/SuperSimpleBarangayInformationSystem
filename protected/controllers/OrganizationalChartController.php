@@ -38,12 +38,12 @@ class OrganizationalChartController extends Controller
 		$yearSelectRange = YearRangeCollection::getCollection();
 
 		$dateFrom = date("Y-m-d H:i:s" ,strtotime(sprintf("first day of October %s", date("Y"))) );
-		$dateTo = date("Y-m-d H:i:s" ,strtotime(sprintf("last day of October %s", intval(date("Y")) +  1 )) );
+		$dateTo = date("Y-m-d H:i:s" ,strtotime(sprintf("last day of September %s", intval(date("Y")) +  1 )) );
 
 		if (Yii::app()->request->isPostRequest) {
 			$searchRange = $_POST['searchRange'];
 			$dateFrom = date("Y-m-d H:i:s" ,strtotime(sprintf("first day of October %s", $searchRange)) );
-			$dateTo = date("Y-m-d H:i:s" ,strtotime(sprintf("last day of October %s", intval($searchRange) +  1 )) );
+			$dateTo = date("Y-m-d H:i:s" ,strtotime(sprintf("last day of September %s", intval($searchRange) +  1 )) );
 		}
 		$criteria = new CDbCriteria;
 		$criteria->addCondition("DATE(term_from) between :dateFrom and :dateTo");

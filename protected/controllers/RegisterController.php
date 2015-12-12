@@ -44,6 +44,7 @@ class RegisterController extends Controller
 		Yii::import('application.libs.Zebra_Image.Zebra_Image');
 		$residentRecord = new Residents("createNewRecord");
 		if (Yii::app()->request->isPostRequest && $_POST['Residents']) {
+			$oldProfilePic = $residentRecord->profile_picture;
 			$residentRecord->attributes = $_POST['Residents'];
 			if ($residentRecord->validate()) {
 					//Decode with base64

@@ -168,3 +168,21 @@ resident record registration
 
 @TODO - organizational chart
 @DONE
+
+
+@TODO - edit resident information
+ResidentsController
+@DONE
+
+
+@TODO - bug when updating resident record . 
+on birthday - it resets back to 
+@DONE
+
+
+@TODO - bug when updating resident record . 
+on birthday - not updating
+on mobile phone - not updating
+@DONE
+
+

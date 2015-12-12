@@ -1,0 +1,5 @@
+
+
+*allow user to import images
+
+* allow user to search on the list of residents

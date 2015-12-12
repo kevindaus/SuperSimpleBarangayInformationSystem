@@ -17,5 +17,8 @@
         "psr-4":{
             "Zebra\\":"..//libs//Zebra_IMage//"
         }
+    },
+    "require": {
+        "fzaninotto/faker": "^1.5"
     }
 }

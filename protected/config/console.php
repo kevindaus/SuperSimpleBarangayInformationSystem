@@ -7,6 +7,7 @@ return array(
 	'name' => 'My Console Application',
 	'import' => array(
 		'ext.YiiMailer.YiiMailer',
+		'application.models.*',
 	),
 	// application components
 	'components' => array(
