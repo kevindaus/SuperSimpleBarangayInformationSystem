@@ -67,7 +67,7 @@ $residentRecord->residentSinceYear = $residentSinceYear;
 		    	)
 			)); 
 		?>
-<!-- 
+
 		<fieldset>
 			<legend>Account Information : <small style="color: black">You will be needing this to generate a barangay clearance</small></legend>
 		</fieldset>
@@ -101,7 +101,7 @@ $residentRecord->residentSinceYear = $residentSinceYear;
 			</div>
 			<div class="clearfix"></div>
 		</div>
- -->
+ 
 
  		<fieldset>
 			<legend>Resident Picture</legend>

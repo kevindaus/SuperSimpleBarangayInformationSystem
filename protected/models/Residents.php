@@ -278,5 +278,16 @@ class Residents extends CActiveRecord
 			'criteria'=>$criteria,
 		));		
 	}
+	public function beforeDelete()
+	{
+		if (isset($this->profile_picture) && !empty($this->profile_picture)   ) {
+			/*delete the photo*/
+			$imagePath = Yii::getPathOfAlias("imageUploads") . "/" . $this->profile_picture;
+            @unlink($imagePath);
+		}
+		parent::beforeDelete();
+		return true;
+	}
+
 
 }

@@ -134,7 +134,7 @@ class BarangayOfficials extends CActiveRecord
 	}	
 	public function beforeDelete()
 	{
-		if (isset($this->profile_image)) {
+		if (isset($this->profile_image) && !empty($this->profile_image)   ) {
 			/*delete the photo*/
 			$imagePath = Yii::getPathOfAlias("imageUploads") . "/" . $this->profile_image;
             unlink($imagePath);

@@ -45,7 +45,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
 		    	)
 			)); 
 		?>
-<!-- 
+
 		<fieldset>
 			<legend>Account Information : <small style="color: black">You will be needing this to generate a barangay clearance</small></legend>
 		</fieldset>
@@ -79,7 +79,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
 			</div>
 			<div class="clearfix"></div>
 		</div>
- -->
+ 
 
  		<fieldset>
 			<legend>Resident Picture</legend>
@@ -108,15 +108,7 @@ $baseUrl = Yii::app()->theme->baseUrl;
 	    		<?php echo $form->labelEx($residentRecord,'salutation'); ?>
 			</div>
 			<div style="text-align:left" class="span6">
-			<?php echo CHtml::activeDropDownList(
-				$residentRecord, 
-				'salutation', array(
-					"Mr"=>"Mr",
-					"Prof"=>"Prof",
-					"Dr"=>"Dr",
-					"Mrs"=>"Mrs",
-					"Ms"=>"Ms",
-				), array("prompt"=>'Title')); ?>
+				<?php echo CHtml::activeTextField($residentRecord, 'salutation'); ?>
 	    		<br><?php echo $form->error($residentRecord,'salutation'); ?>
 			</div>
 			<div class="clearfix"></div>

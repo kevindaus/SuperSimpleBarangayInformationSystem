@@ -55,10 +55,11 @@ $baseUrl = Yii::app()->theme->baseUrl;
 	<?php $this->widget('zii.widgets.CDetailView', array(
 		'data'=>$model,
 		'attributes'=>array(
+			'username',
 			'salutation',
 			'firstname',
-			'lastname',
 			'middle_name',
+			'lastname',
 			'birthday',
 			'postal_code',
 			'mobile_phone_number',

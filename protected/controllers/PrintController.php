@@ -39,12 +39,28 @@ class PrintController extends Controller
 	public function actionBarangayClearance()
 	{
 		$model = Residents::model()->findByAttributes(array('username'=>Yii::app()->user->id));
-		$punongbarangayFull = "test test";
-		$secretaryFull = "secretat asdasd";
-		$this->render("barangayclearance",compact('model','punongbarangayFull','secretaryFull'));
+		$criteriaPunongbarangay = new CDbCriteria;
+		$criteriaPunongbarangay->compare("position",'punong barangay');
+		$criteriaPunongbarangay->order = "date_record_created DESC";
+
+		$criteriaSecretary = new CDbCriteria;
+		$criteriaSecretary->compare("position",'secretary');
+		$criteriaSecretary->order = "date_record_created DESC";
+
+		$punongBarangaMdl = BarangayOfficials::model()->find($criteriaPunongbarangay);
+		$secretary = BarangayOfficials::model()->find($criteriaSecretary);
+
+
+
+		$punongbarangayFull = sprintf("%s %s",$punongBarangaMdl->firstname , $punongBarangaMdl->lastname);
+		$secretaryFull = sprintf("%s %s",$secretary->firstname, $secretary->lastname);
+		header("Content-type:application/pdf");
+		header("Content-Disposition:attachment;filename='Barangay_Clearance.pdf'");
+		$dompdf = new DOMPDF();
+		$output1 = $this->renderPartial("barangayclearance",compact('model','punongbarangayFull','secretaryFull'),true);
+		$dompdf->load_html($output1);
+		$dompdf->render();
+		$dompdf->stream("Barangay_Clearance.pdf");
+		
 	}
-
-
-
-
 }
