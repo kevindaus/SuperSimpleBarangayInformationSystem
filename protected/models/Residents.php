@@ -213,6 +213,12 @@ class Residents extends CActiveRecord
 	public function beforeSave()
 	{
 		$isValid = true;
+
+		if ($this->isNewRecord) {
+			$this->date_record_created = date("Y-m-d H:i:s");
+		}
+		$this->date_record_updated = date("Y-m-d H:i:s");
+
 		if ($this->scenario === "createNewRecord" || $this->scenario === "update" ) {
 			try {
 				/*format birthday*/
