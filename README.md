@@ -33,9 +33,12 @@ INSTALLATION
 
 **TODOS / SUGGESTIONS:**
 ------------
-God mode - for superadmin .  @ONGOING
-  - User management (CRUD / Analytics)
-  - Track URL shortened (CRUD / Analytics)
+	* Increase scope  , make it Provincial
+	* Report charts
+		- population chart
+		- voters count
+		- 
+
 
 
 Screenshots
