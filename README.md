@@ -29,8 +29,6 @@ INSTALLATION
 	* php -f yiic.php migrate --migrationPath=application.modules.user.migrations
 	* php -f yiic.php migrate
 
-
-
 **TODOS / SUGGESTIONS:**
 ------------
 	* Increase scope  , make it Provincial

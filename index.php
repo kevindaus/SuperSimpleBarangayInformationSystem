@@ -1,6 +1,5 @@
 <?php
-define('YII_DEBUG', true);
-
+//define('YII_DEBUG', true);
 
 // change the following paths if necessary
 $autoLoad=dirname(__FILE__).'/protected/vendor/autoload.php';
