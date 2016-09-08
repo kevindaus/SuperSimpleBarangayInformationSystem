@@ -60,7 +60,7 @@ return array(
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
             ),
         ),
-        // uncomment the following to use a MySQL database
+        // Update database connection string
           'db'=>array(
               'connectionString' => 'mysql:host=localhost;dbname=barangayinformationsystem',
               'emulatePrepare' => true,

@@ -1,11 +1,12 @@
-URL Shortener
+Barangay Information System
 ============================
 
-Yet-Another-URL-Shortener. Free open source URL shortener . 
+
+
 Features : 
 
-  * Shrink url like bit.ly
-  * Dashboard analytics report for users
+  * Manage resident information.
+  * Request barangay certificate.
 
 
 
@@ -19,31 +20,14 @@ The minimum requirement by this project template that your Web server supports
 INSTALLATION
 ------------
 
-1.)
-2.)
-3.)
-4.)
-5.)
-
-
-
-CONFIGURATION
--------------
-
-### Database
-
-Edit the file `config/db.php` with your database, for example:
-
-```php
-return [
-    'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=urlshortener',
-    'username' => 'urlshortener',
-    'password' => 'myveryHardUncrackablePassword',
-    'charset' => 'utf8',
-];
-```
-
+* Create database. 
+* Update the configuration file located at protected/config/main.php  , line 65
+* Update the configuration file located at protected/config/console.php  , line 15
+* Pull dependencies. composer install
+* Run migration script. Make sure you are at BarangayInformationSystem/protected/
+	* php -f yiic.php migrate --migrationPath=application.modules.rights.migrations
+	* php -f yiic.php migrate --migrationPath=application.modules.user.migrations
+	* php -f yiic.php migrate
 
 
 
@@ -52,11 +36,6 @@ return [
 God mode - for superadmin .  @ONGOING
   - User management (CRUD / Analytics)
   - Track URL shortened (CRUD / Analytics)
-
-
-
-
-
 
 
 Screenshots
