@@ -37,8 +37,6 @@ INSTALLATION
 	* Report charts
 		- population chart
 		- voters count
-		- 
-
 
 
 Screenshots
